@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OMRStudio"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -12,23 +13,62 @@
         TextOptions.TextRenderingMode="Aliased"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+        Title="OMR STUDIO" Height="450" Width="800">
+    
         
-        <TextBlock Margin="2,2" Text="Hello" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Width="auto" FontFamily="Arial"/>
-        <TextBox Margin="2,2" x:Name="myTextBox" Grid.Row="0" Grid.Column="1" Width="auto" Text="I am a text box" VerticalAlignment="Center"/>
-        <Button Margin="2,2" x:Name="myButton" Grid.Row="0" Grid.Column="2" Content="Button" VerticalAlignment="Center"/>
+        <Grid x:Name="MainWindowGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+        <materialDesign:Card Margin="0,0,0,0" Grid.Row="0" BorderThickness="0" UniformCornerRadius="0" Background="{DynamicResource MaterialDesignBackground}">
+            <Menu Margin="40,0,0,0">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New Project" Command="">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FilePlusOutline" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Cut" Command="Cut">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentCut" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Copy" Command="Copy">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentCopy" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Paste" Command="Paste">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentPaste" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem Header="_Image View" Command="{Binding NavCommand}" CommandParameter="imageview">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileImageOutline" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Data View" Command="{Binding NavCommand}" CommandParameter="dataview">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileTableBoxOutline" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </materialDesign:Card>
+        <Grid x:Name="MainWindowContentGrid" Grid.Row="1" >
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid> 
+
         
 
-    </Grid>
+        </Grid>           
+
+    
 </Window>
