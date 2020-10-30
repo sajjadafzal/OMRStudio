@@ -1,4 +1,7 @@
-﻿using OMRStudio.ViewModels.Base;
+﻿using OMRStudio.Interfaces;
+using OMRStudio.Models;
+using OMRStudio.Services;
+using OMRStudio.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,10 +12,14 @@ namespace OMRStudio.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public RelayCommands<string> NavCommand { get; set; }        
+        ProjectModel project;
+        public RelayCommands<string> NavCommand { get; set; } 
+        public RelayCommands NewProjectCommand { get; set; }
         public MainWindowViewModel()
         {
+            project = Factory.CreateNew<ProjectModel>();
             NavCommand = new RelayCommands<string>(OnNav);
+            NewProjectCommand = new RelayCommands(OnNewProject);
             CurrentViewModel = imageViewModel;
         }
 
@@ -38,6 +45,12 @@ namespace OMRStudio.ViewModels
                     CurrentViewModel = imageViewModel;
                     break;
             }
+        }
+
+        private void OnNewProject()
+        {
+            IFolderBrowser browser = Factory.CreateNew<BrowserServices>();
+            project.ProjectDirectoryPath = browser.BrowseFolder();
         }
 
     }
